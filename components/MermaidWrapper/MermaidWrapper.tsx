@@ -5,7 +5,7 @@ import { VFile } from 'vfile';
 
 const MermaidWrapper = ({ chart, config }: any) => {
   // Mermaid initilize its config
-  const [chartRender, setChartRender] = React.useState(false);
+  const [chartRender, setChartRender] = React.useState();
 
   useEffect(() => {
     mermaid.mermaidAPI.initialize({ startOnLoad: false });
@@ -17,7 +17,7 @@ const MermaidWrapper = ({ chart, config }: any) => {
     setChartRender(graph);
   }, []);
 
-  return chartRender;
+  return chartRender ? chartRender : null;
 };
 
 export default MermaidWrapper;
