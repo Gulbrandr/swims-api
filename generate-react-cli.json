@@ -1,0 +1,30 @@
+{
+  "usesTypeScript": true,
+  "usesCssModule": false,
+  "cssPreprocessor": "css",
+  "testLibrary": "Testing Library",
+  "component": {
+    "default": {
+      "path": "components",
+      "withStyle": false,
+      "withTest": true,
+      "withStory": true,
+      "withLazy": false,
+      "withIndex": true,
+      "customTemplates": {
+        "index": "_templates/grc/index.tsx"
+      }
+    },
+    "feature": {
+      "path": "features",
+      "withStyle": false,
+      "withTest": true,
+      "withStory": true,
+      "withLazy": false,
+      "withIndex": true,
+      "customTemplates": {
+        "index": "_templates/grc/index.tsx"
+      }
+    }
+  }
+}
