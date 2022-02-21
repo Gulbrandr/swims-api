@@ -1,14 +1,29 @@
 openapi: 3.0.0
 info:
   description: |-
+    # General API:
+      ## Authentication:
 
+      | Requirement |  |
+      |---|---|
+      | Static IP | The Vendor will submit a Static IP, that all API Request will go through. |
+      | Submit: TLS/SSL Cert | The Vendor will SUBMIT a TLS/SSL Cert that will be submitted with each request. |
+      | Request: TLS/SSL Cert | The Vendor will REQUEST and be PROVIDED with a Certificate that will be submitted with each request |
 
-    # Authentication
+      <!-- ReDoc-Inject: <security-definitions> -->
 
-    # Request
+    # Request:
       Each API request must contain headers that identify the API version, vendor and club credentials, and the API username. All requests must be submitted from one of your servers to the USA Swimming server. This is to ensure that security keys are never shared with a client application such as a web browser. All requests must be submitted with HTTPS (SSL) encryption. HTTP is not supported. TLS 1.2 is required.
-
-    <!-- ReDoc-Inject: <security-definitions> -->
+    # Responses
+      This is a list of HTTP response status codes common to all API requests. See the individual API documentation below for additional HTTP response status codes specific to each API.
+      |     Response Code                  |     Description                                                                                        |
+      |------------------------------------|--------------------------------------------------------------------------------------------------------|
+      |     400 Bad Request                |     API version is missing or incorrect.     {"message": "Invalid Version”}                            |
+      |     400 Bad Request                |     Invalid version number     {"message": "Invalid Version"}                                          |
+      |     400 Bad Request                |     The api-user-name header is missing     {"message": "api-user-name header   value is required"}    |
+      |     401 Unauthorized               |     The vendor-key, vendor-secret, or auth-key is invalid                                              |
+      |     401 Unauthorized               |     The club has revoked access for the vendor.                                                        |
+      |     500 Internal Server   Error    |     An error occurred within   the API while   processing the request                                  |
   version: 1.0.0
   title: Swims USA External REST API
   termsOfService: http://swagger.io/terms/
@@ -22,6 +37,8 @@ tags:
     description: Access to Security Endpoints
   - name: Athlete
     description: Access to Athlete Details
+  - name: Club
+  - name: Registration
   - name: Video
     description: Access to Video Streams
 
@@ -49,29 +66,126 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Athlete'
-      security:
-        - swims_auth:
-            - read:athlete
+        '404':
+          description: Athlete was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '409':
+          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/security/RegisterClubWithVendor:
+    post:
+      tags:
+        - Security
+      summary: Authenticate the club with the vendor.
+      description: 'Authenticate the club with the vendor and obtain a club authentication key (auth-key) for future club level requests.'
+      requestBody:
+        $ref: '#/components/requestBodies/RegisterClubWithVendor'
+      responses:
+        '200':
+          description: Registration of club to vendor was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterClubWithVendor-Res'
+        '401':
+          description: The lscId, clubCode, and clubActivationCode submitted is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/oms/athletes/%RegInfo%:
+    get:
+      tags:
+        - Registration
+      summary: Retrieves Registration Information.
+      description: 'Get the Athlete Registration Information'
+      operationId: uploadFile
+      parameters:
+        - name: id
+          in: path
+          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
 
-servers:
-  - url: https://swimsmember.org/api/
+          required: true
+          schema:
+            type: string
+            format: guid
+      responses:
+        '200':
+          description: Athlete was found and data is being returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Athlete'
+        '404':
+          description: Athlete was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '409':
+          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/oms/athletes/%ClubRoster%:
+    get:
+      tags:
+        - Club
+      summary: Retrieves Athlete Information.
+      description: 'Get the Athlete Information using the Person ID for the record you want.'
+      operationId: uploadFile
+      parameters:
+        - name: id
+          in: path
+          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
+
+          required: true
+          schema:
+            type: string
+            format: guid
+      responses:
+        '200':
+          description: Athlete was found and data is being returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Athlete'
+        '404':
+          description: Athlete was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '409':
+          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
 components:
   requestBodies:
-    Athlete:
+    RegisterClubWithVendor:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Athlete'
+            $ref: '#/components/schemas/RegisterClubWithVendor-Req'
       description: Pet object that needs to be added to the store
       required: true
+
   securitySchemes:
     swims_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://swims.com/oauth/authorize
-          scopes:
-            read:athlete: read your athlete
+      type: apiKey
+      name: api_key
+      in: header
+
   schemas:
     ApiResponse:
       type: object
@@ -83,13 +197,47 @@ components:
           type: string
         message:
           type: string
+    RegisterClubWithVendor-Req:
+      type: object
+      required:
+        - 'IscId'
+        - 'clubCode'
+        - 'clubActivationCode'
+      properties:
+        IscId:
+          type: string
+          description: The LSC of the club to register
+          example: CO
+        clubCode:
+          type: string
+          description: The Club Code of the club to register
+          example: AQUA
+        clubActivationCode:
+          type: string
+          description: The user provided activation code of the club to register. The user obtained this code from the USA Swimming site when choosing to activate the vendor.
+          example: 286F1534
+    RegisterClubWithVendor-Res:
+      type: object
+      properties:
+        authKey:
+          type: string
+          description: The club authentication key to use for future requests that require a club level auth-key.
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - REVOKED
+          description: |-
+            ACTIVE: The club is activated and api requests can be submitted from the vendor in behalf of this club.
+
+            REVOKE: The club has revoked access for the vendor and api requests can no longer be submitted from the vendor in behalf of this club.
     Athlete:
       type: object
       properties:
         personId:
           type: string
           format: guid
-          description: The SWIMS unique identifier for the person. This is the same as the {id} value submitted with the reques.
+          description: The SWIMS unique identifier for the person. This is the same as the {id} value submitted with the request.
         usasId:
           type: string
           description: The USA Swimming ID for the athlete
@@ -116,12 +264,12 @@ components:
           example: Jr.
         birthDate:
           type: string
-          description: (javascript)	Athlete’s Birth Date
-          example: 2002-08-22
+          description: (javascript)	Athlete's Birth Date
+          example: 2002 - 08 - 22
         gender:
           type: string
           description: Athletes Gender
-          example: M	F
+          example: M F
         lscId:
           type: string
           description: The current LSC the athlete is assigned to.
@@ -166,3 +314,64 @@ components:
           type: string
           description: Mobile phone number
           example: 3034445555
+        email:
+          type: string
+          description: Athlete email. Could be a family email. Depends on what is originally sent in the SDIF registration file
+          example: milehighswimmer@yahoo.com
+        fina:
+          type: boolean
+          description: Does the athlete swim for a FINA country?
+        finaCountryCode:
+          type: string
+          description: The 3 character FINA country code the athlete swims for
+          example: GBR
+        finaCountry:
+          type: string
+          description: The FINA country name the athlete swims for
+          example: Great Britain
+        usCitizen:
+          type: boolean
+          description: Is this member a US Citizen or not?
+        dualCitizen:
+          type: boolean
+          description: Does this member have dual country citizenship or not?
+        representedOtherFINAFederation:
+          type: boolean
+          description: Has this athlete represented other FINA Federations?
+        sdifEthnicityCode1:
+          type: string
+          description: Ethnicity Code #1
+        sdifEthnicityCode2:
+          type: string
+          description: Ethnicity Code #2
+        disabilityBlind:
+          type: boolean
+          description: Does the athlete have a Blind disability?
+        disabilityDeaf:
+          type: boolean
+          description: Does the athlete have a Deaf disability?
+        disabilityPhysical:
+          type: boolean
+          description: Does the athlete have a Physical        disability?
+        disabilityCognitive:
+          type: boolean
+          description: Does the athlete have a Cognitive disability?
+        guardian1LastName:
+          type: string
+          description: Guardian #1 Last Name
+        guardian1FirstName:
+          type: string
+          description: Guardian #1 First Name
+        guardian2LastName:
+          type: string
+          description: Guardian #2 Last Name
+        guardian2FirstName:
+          type: string
+          description: Guardian #2 First Name
+        receiveNewsletter:
+          type: boolean
+          description: Does the member want to receive the monthly USA        Swimming newsletter?
+        yearOfHighschoolGraduation:
+          type: string
+          description: (integer)	Athlete's year of high school graduation
+          example: 2015

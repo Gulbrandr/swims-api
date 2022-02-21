@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+
 import type { AppProps } from 'next/app';
 //@ts-ignore
 import { ReactQueryDevtools } from 'react-query/lib/devtools/';
@@ -10,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

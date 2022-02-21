@@ -11,6 +11,7 @@
     "feature": "npx generate-react-cli component --type=feature"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "axios": "^0.26.0",
     "core-js": "^3.21.1",
     "fs": "^0.0.1-security",
