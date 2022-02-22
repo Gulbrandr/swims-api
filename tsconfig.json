@@ -15,7 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "experimentalDecorators": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "_templates", "_scripts"]

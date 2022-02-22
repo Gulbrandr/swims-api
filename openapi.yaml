@@ -12,9 +12,9 @@ info:
 
       <!-- ReDoc-Inject: <security-definitions> -->
 
-    # Request:
+    ## Request
       Each API request must contain headers that identify the API version, vendor and club credentials, and the API username. All requests must be submitted from one of your servers to the USA Swimming server. This is to ensure that security keys are never shared with a client application such as a web browser. All requests must be submitted with HTTPS (SSL) encryption. HTTP is not supported. TLS 1.2 is required.
-    # Responses
+    ## Responses
       This is a list of HTTP response status codes common to all API requests. See the individual API documentation below for additional HTTP response status codes specific to each API.
       |     Response Code                  |     Description                                                                                        |
       |------------------------------------|--------------------------------------------------------------------------------------------------------|
@@ -23,7 +23,7 @@ info:
       |     400 Bad Request                |     The api-user-name header is missing     {"message": "api-user-name header   value is required"}    |
       |     401 Unauthorized               |     The vendor-key, vendor-secret, or auth-key is invalid                                              |
       |     401 Unauthorized               |     The club has revoked access for the vendor.                                                        |
-      |     500 Internal Server   Error    |     An error occurred within   the API while   processing the request                                  |
+      |     500 Internal Server Error      |     An error occurred within   the API while   processing the request                                  |
   version: 1.0.0
   title: Swims USA External REST API
   termsOfService: http://swagger.io/terms/
@@ -140,6 +140,41 @@ paths:
         - Club
       summary: Retrieves Athlete Information.
       description: 'Get the Athlete Information using the Person ID for the record you want.'
+      operationId: uploadFile
+      parameters:
+        - name: id
+          in: path
+          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
+
+          required: true
+          schema:
+            type: string
+            format: guid
+      responses:
+        '200':
+          description: Athlete was found and data is being returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '404':
+          description: Athlete was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '409':
+          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /api/oms/videostreamstatus:
+    get:
+      tags:
+        - Video
+      summary: Retrieves Registration Information.
+      description: 'Get the Athlete Registration Information'
       operationId: uploadFile
       parameters:
         - name: id

@@ -1,0 +1,110 @@
+import { observer } from 'mobx-react';
+import * as React from 'react';
+
+import { ExternalDocumentation } from 'redoc/bundles/redoc.browser.lib';
+import { AdvancedMarkdown } from 'redoc/bundles/redoc.browser.lib';
+import {
+  MiddlePanel,
+  Row,
+  Section,
+  ShareLink,
+} from 'redoc/bundles/redoc.browser.lib';
+import { ContentItemModel } from 'redoc/bundles/redoc.browser.lib';
+import { GroupModel, OperationModel } from 'redoc/bundles/redoc.browser.lib';
+import { Operation } from 'redoc/bundles/redoc.browser.lib';
+
+@observer
+export class ContentItems extends React.Component<{
+  items: ContentItemModel[];
+}> {
+  render() {
+    const items = this.props.items;
+    if (items.length === 0) {
+      return null;
+    }
+    return items.map((item) => {
+      return <ContentItem key={item.id} item={item} />;
+    });
+  }
+}
+
+export interface ContentItemProps {
+  item: ContentItemModel;
+}
+
+@observer
+export class ContentItem extends React.Component<ContentItemProps> {
+  render() {
+    const item = this.props.item;
+    let content;
+    const { type } = item;
+    switch (type) {
+      case 'group':
+        content = null;
+        break;
+      case 'tag':
+      case 'section':
+        content = <SectionItem {...this.props} />;
+        break;
+      case 'operation':
+        content = <OperationItem item={item as any} />;
+        break;
+      default:
+        content = <SectionItem {...this.props} />;
+    }
+
+    return (
+      <>
+        {content && (
+          <Section id={item.id} underlined={item.type === 'operation'}>
+            {content}
+          </Section>
+        )}
+        {item.items && <ContentItems items={item.items} />}
+      </>
+    );
+  }
+}
+
+const middlePanelWrap = (component) => (
+  <MiddlePanel compact={true}>{component}</MiddlePanel>
+);
+
+@observer
+export class SectionItem extends React.Component<ContentItemProps> {
+  render() {
+    const { name, description, externalDocs, level } = this.props
+      .item as GroupModel;
+
+    return (
+      <>
+        <Row>
+          <MiddlePanel compact={false}>
+            <ShareLink to={this.props.item.id} />
+            {name}
+          </MiddlePanel>
+        </Row>
+        <AdvancedMarkdown
+          source={description || ''}
+          htmlWrap={middlePanelWrap}
+        />
+        {externalDocs && (
+          <Row>
+            <MiddlePanel>
+              <ExternalDocumentation externalDocs={externalDocs} />
+            </MiddlePanel>
+          </Row>
+        )}
+      </>
+    );
+  }
+}
+
+@observer
+export class OperationItem extends React.Component<{
+  item: OperationModel;
+}> {
+  render() {
+    return <Operation operation={this.props.item} />;
+  }
+}

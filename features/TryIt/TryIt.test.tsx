@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Box from './Box';
+import TryIt from './TryIt';
 
-describe('<Box />', () => {
+describe('<TryIt />', () => {
   test('it should mount', () => {
-    render(<Box />);
+    render(<TryIt />);
     
-    const box = screen.getByTestId('Box');
+    const tryIt = screen.getByTestId('TryIt');
 
-    expect(box).toBeInTheDocument();
+    expect(tryIt).toBeInTheDocument();
   });
 });

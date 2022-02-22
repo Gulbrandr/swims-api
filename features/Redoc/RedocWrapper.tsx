@@ -16,6 +16,7 @@ export interface RedocStandaloneProps {
   specUrl?: string;
   options?: RedocRawOptions;
   onLoaded?: (e?: Error) => any;
+  ref: any;
 }
 
 export const RedocWrapper = function (props: RedocStandaloneProps) {
