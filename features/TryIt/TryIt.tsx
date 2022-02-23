@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Transition } from '@headlessui/react';
-import printJS from 'print-js';
 
 interface TryItProps {}
 
@@ -9,12 +8,12 @@ const TryIt: FC<TryItProps> = () => {
 
   return (
     <>
-      <button
+      {/* <button
         className="bg-primary text-white w-20 h-10 fixed z-50  bottom-0 left-0 m-6 rounded"
-        onClick={() => printJS('docs/printjs.pdf')}
+        onClick={() => setIsOpen(!isOpen)}
       >
         Try It
-      </button>
+      </button> */}
 
       <Transition
         show={isOpen}

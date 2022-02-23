@@ -61,7 +61,6 @@ export class Redoc extends React.Component<RedocProps> {
               <ApiContentWrap className="api-content">
                 <ApiInfo store={store} />
                 <ContentItems items={menu.items as any} />
-                <MermaidWrapper />
               </ApiContentWrap>
               <BackgroundStub />
             </RedocWrap>

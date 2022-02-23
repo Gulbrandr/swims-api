@@ -34,50 +34,44 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 tags:
   - name: Security
-    description: Access to Security Endpoints
-  - name: Athlete
-    description: Access to Athlete Details
-  - name: Club
-  - name: Registration
-  - name: Video
-    description: Access to Video Streams
+  - name: Club Roster
+  - name: Registration Info
 
 paths:
-  /api/oms/athletes/{id}:
-    get:
-      tags:
-        - Athlete
-      summary: Retrieves Athlete Information.
-      description: 'Get the Athlete Information using the Person ID for the record you want.'
-      operationId: uploadFile
-      parameters:
-        - name: id
-          in: path
-          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
-
-          required: true
-          schema:
-            type: string
-            format: guid
-      responses:
-        '200':
-          description: Athlete was found and data is being returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Athlete'
-        '404':
-          description: Athlete was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '409':
-          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
+  # /api/oms/athletes/{id}:
+  #   get:
+  #     tags:
+  #       -
+  #     summary: Retrieves Athlete Information.
+  #     description: 'Get the Athlete Information using the Person ID for the record you want.'
+  #     operationId: uploadFile
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
+  #         required: true
+  #         schema:
+  #           type: string
+  #           format: guid
+  #     responses:
+  #       '200':
+  #         description: Athlete was found and data is being returned
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Athlete'
+  #       '404':
+  #         description: Athlete was not found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ApiResponse'
+  #       '409':
+  #         description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ApiResponse'
   /api/security/RegisterClubWithVendor:
     post:
       tags:
@@ -99,18 +93,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-  /api/oms/athletes/%RegInfo%:
+  /swims/OmsAthlete/registrationInfo/orgUnitId/{orgUnitId}/memberId/{memberId}:
     get:
       tags:
-        - Registration
+        - Registration Info
       summary: Retrieves Registration Information.
       description: 'Get the Athlete Registration Information'
       operationId: uploadFile
       parameters:
-        - name: id
+        - name: memberId
           in: path
           description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
-
+          required: true
+          schema:
+            type: string
+            format: guid
+        - name: orgUnitId
+          in: path
+          description: Represents the SWIMS unique Organization ID this is a GUID value.
           required: true
           schema:
             type: string
@@ -121,90 +121,36 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Athlete'
-        '404':
-          description: Athlete was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '409':
-          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-  /api/oms/athletes/%ClubRoster%:
+                $ref: '#/components/schemas/RegistrationInfo'
+  /swims/OmsAthlete/clubRoster/orgUnit/{orgUnitId}:
     get:
       tags:
-        - Club
-      summary: Retrieves Athlete Information.
-      description: 'Get the Athlete Information using the Person ID for the record you want.'
+        - Club Roster
+      summary: Retrieves Member Information.
+      description: 'Get the Member Information by Club'
       operationId: uploadFile
       parameters:
-        - name: id
+        - name: orgUnitId
           in: path
-          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
-
+          description: the org unit id
           required: true
+          schema:
+            type: string
+            format: int32
+        - name: memberId
+          in: query
+          description: the member id
+          required: false
           schema:
             type: string
             format: guid
       responses:
         '200':
-          description: Athlete was found and data is being returned
+          description: Member was found and data is being returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '404':
-          description: Athlete was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '409':
-          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-  /api/oms/videostreamstatus:
-    get:
-      tags:
-        - Video
-      summary: Retrieves Registration Information.
-      description: 'Get the Athlete Registration Information'
-      operationId: uploadFile
-      parameters:
-        - name: id
-          in: path
-          description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
-
-          required: true
-          schema:
-            type: string
-            format: guid
-      responses:
-        '200':
-          description: Athlete was found and data is being returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Athlete'
-        '404':
-          description: Athlete was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '409':
-          description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-
+                $ref: '#/components/schemas/OrgAthlete'
 components:
   requestBodies:
     RegisterClubWithVendor:
@@ -266,6 +212,89 @@ components:
             ACTIVE: The club is activated and api requests can be submitted from the vendor in behalf of this club.
 
             REVOKE: The club has revoked access for the vendor and api requests can no longer be submitted from the vendor in behalf of this club.
+    OrgAthlete:
+      type: object
+      properties:
+        memberId:
+          type: string
+        oldUsasId:
+          type: string
+        firstName:
+          type: string
+        preferredName:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date
+          example: 2022-02-22T16:37:02.855Z
+        registrations:
+          type: array
+          items:
+            type: object
+            properties:
+              registrationDate:
+                type: string
+                format: date
+                example: 2022-02-22T16:37:02.855Z,
+              offeringId:
+                type: integer
+                example: 0,
+              usasFee:
+                type: number
+                format: money
+              lscFee:
+                type: number
+                format: money
+              isRenewal:
+                type: boolean
+    RegistrationInfo:
+      type: object
+      properties:
+        memberId:
+          type: string
+        oldUsasId:
+          type: string
+        firstName:
+          type: string
+        preferredName:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date
+          example: 2022-02-22T16:37:02.855Z
+        registrations:
+          type: array
+          items:
+            type: object
+            properties:
+              registrationDate:
+                type: string
+                format: date
+                example: 2022-02-22T16:37:02.855Z
+              offeringId:
+                type: integer
+                example: 0,
+              usasFee:
+                type: number
+                format: money
+              lscFee:
+                type: number
+                format: money
+              isRenewal:
+                type: boolean
+              memberGoodStandingExpirationDate:
+                type: string
+                format: date
+                example: 2022-02-22T16:38:55.865Z
+
     Athlete:
       type: object
       properties:
