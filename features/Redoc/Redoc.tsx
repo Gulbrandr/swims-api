@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import PropTypes from 'prop-types';
-import MermaidWrapper from 'components/MermaidWrapper';
 
 import {
   ThemeProvider,
