@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 
 interface TextLinkProps {
-  href: string;
+  href?: string;
+  children?: React.ReactNode;
+  props?: any;
 }
 
 const TextLink: FC<TextLinkProps> = ({ href, children, ...props }) => (
