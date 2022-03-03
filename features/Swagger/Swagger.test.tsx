@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import TryIt from './TryIt';
+import Swagger from './Swagger';
 
-describe('<TryIt />', () => {
+describe('<Swagger />', () => {
   test('it should mount', () => {
-    render(<TryIt />);
+    render(<Swagger />);
     
-    const tryIt = screen.getByTestId('TryIt');
+    const swagger = screen.getByTestId('Swagger');
 
-    expect(tryIt).toBeInTheDocument();
+    expect(swagger).toBeInTheDocument();
   });
 });

@@ -1,0 +1,203 @@
+{
+  "swagger": "2.0",
+  "x-info": {
+    "title": "Third Party API",
+    "version": "v1",
+    "description": "API for third party"
+  },
+  "paths": {
+    "/swims/OmsAthlete/clubRoster/orgUnit/{orgUnitId}": {
+      "get": {
+        "tags": ["OmsAthlete"],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgUnitId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "memberId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OmsAthleteDetail"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swims/OmsAthlete/registrationInfo/orgUnitId/{orgUnitId}/memberId/{memberId}": {
+      "get": {
+        "tags": ["OmsAthlete"],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgUnitId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "memberId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/OmsAthleteRegInfo"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OmsAthleteDetail": {
+      "type": "object",
+      "properties": {
+        "memberId": {
+          "type": "string"
+        },
+        "oldUsasId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "preferredName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "registrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OmsAthleteReg"
+          }
+        }
+      }
+    },
+    "OmsAthleteReg": {
+      "type": "object",
+      "properties": {
+        "registrationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "offeringId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "usasFee": {
+          "format": "double",
+          "type": "number"
+        },
+        "lscFee": {
+          "format": "double",
+          "type": "number"
+        },
+        "isRenewal": {
+          "type": "boolean"
+        }
+      }
+    },
+    "OmsAthleteRegDetails": {
+      "type": "object",
+      "properties": {
+        "registrationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "offeringId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "usasFee": {
+          "format": "double",
+          "type": "number"
+        },
+        "lscFee": {
+          "format": "double",
+          "type": "number"
+        },
+        "isRenewal": {
+          "type": "boolean"
+        },
+        "memberGoodStandingExpirationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "OmsAthleteRegInfo": {
+      "type": "object",
+      "properties": {
+        "memberId": {
+          "type": "string"
+        },
+        "oldUsasId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "preferredName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "registrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OmsAthleteRegDetails"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme.\r\n    You can generate a token by navigating to the following URL and entering valid credentials: <br><br>\r\n    <a href='https://security-api.swimsmember.org/security/Auth/Authorize?retUrl=www.google.com' target='_blank' >Login</a> <br><br>\r\n    Copy the token returned and then type 'Bearer' [space] and then paste your token in the text input below.\r\n    Example: 'Bearer 12345abcdef'"
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

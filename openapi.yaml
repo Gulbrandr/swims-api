@@ -38,40 +38,6 @@ tags:
   - name: Registration Info
 
 paths:
-  # /api/oms/athletes/{id}:
-  #   get:
-  #     tags:
-  #       -
-  #     summary: Retrieves Athlete Information.
-  #     description: 'Get the Athlete Information using the Person ID for the record you want.'
-  #     operationId: uploadFile
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         description: Represents the SWIMS unique person identifier for a member. This is a GUID value.
-  #         required: true
-  #         schema:
-  #           type: string
-  #           format: guid
-  #     responses:
-  #       '200':
-  #         description: Athlete was found and data is being returned
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Athlete'
-  #       '404':
-  #         description: Athlete was not found
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ApiResponse'
-  #       '409':
-  #         description: The {id} submitted is valid but this member has been deleted in SWIMS and merged into a different member record. The submitted and new personId value is returned in the json response.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ApiResponse'
   /api/security/RegisterClubWithVendor:
     post:
       tags:

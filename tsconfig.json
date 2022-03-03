@@ -18,6 +18,11 @@
     "noImplicitAny": false,
     "experimentalDecorators": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/api/codegen/index.tsm"
+  ],
   "exclude": ["node_modules", "_templates", "_scripts"]
 }

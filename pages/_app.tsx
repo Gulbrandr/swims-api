@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'swagger-ui/dist/swagger-ui.css';
 
 import type { AppProps } from 'next/app';
 //@ts-ignore
@@ -10,10 +11,7 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <Component {...pageProps} />
     </QueryClientProvider>
   );
 }

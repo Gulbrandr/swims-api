@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'main-layout': '12.5rem 1fr',
+        'main-layout': '16rem 1fr',
       },
       gridTemplateRows: {
-        'main-layout': '70px auto',
+        'main-layout': '1fr auto 1fr',
       },
       colors: {
         primary: '#ba0c2f',
@@ -37,5 +37,5 @@ module.exports = {
       ],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
