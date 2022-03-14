@@ -195,9 +195,5 @@
       "description": "JWT Authorization header using the Bearer scheme.\r\n    You can generate a token by navigating to the following URL and entering valid credentials: <br><br>\r\n    <a href='https://security-api.swimsmember.org/security/Auth/Authorize?retUrl=www.google.com' target='_blank' >Login</a> <br><br>\r\n    Copy the token returned and then type 'Bearer' [space] and then paste your token in the text input below.\r\n    Example: 'Bearer 12345abcdef'"
     }
   },
-  "security": [
-    {
-      "Bearer": []
-    }
-  ]
+  "security": []
 }

@@ -10,7 +10,7 @@ module.exports = {
         'main-layout': '16rem 1fr',
       },
       gridTemplateRows: {
-        'main-layout': '1fr auto 1fr',
+        'main-layout': 'auto auto auto',
       },
       colors: {
         primary: '#ba0c2f',

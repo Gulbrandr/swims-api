@@ -47,7 +47,9 @@ const Description: FC<DescriptionProps> = () => {
 
   return (
     <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none">
-      <h1 className="title">General API</h1>
+      {/* <h1 id="general-api" className="title">
+        General API
+      </h1>
 
       <h2 className="title">Authentication</h2>
 
@@ -106,7 +108,7 @@ const Description: FC<DescriptionProps> = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };

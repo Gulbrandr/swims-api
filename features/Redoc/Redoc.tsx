@@ -39,6 +39,7 @@ export class Redoc extends React.Component<RedocProps> {
       store: { spec, menu, options, search, marker },
     } = this.props;
     const store = this.props.store;
+    console.log('menu', menu);
     return (
       <ThemeProvider theme={options.theme}>
         <StoreProvider value={store}>
@@ -46,6 +47,7 @@ export class Redoc extends React.Component<RedocProps> {
             <RedocWrap className="redoc-wrap">
               <StickyResponsiveSidebar menu={menu} className="menu-content">
                 <SwimsLogo />
+
                 {(!options.disableSearch && (
                   <SearchBox
                     search={search!}

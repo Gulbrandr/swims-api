@@ -47,9 +47,17 @@ const WorkFlowWrapper: FC<WorkFlowWrapperProps> = ({
   elements = elementsExample,
   height = '400px',
 }) => (
-  <div className="rounded border-4 bg-slate-100" style={{ height: height }}>
+  <div
+    className="rounded border-4 bg-slate-100 w-full"
+    style={{ height: height }}
+  >
     <ReactFlowProvider>
-      <ReactFlow elements={elements} snapToGrid={true}>
+      <ReactFlow
+        elements={elements}
+        snapToGrid={true}
+        onLoad={(instance) => setTimeout(() => instance.fitView(), 10)}
+        maxZoom={1}
+      >
         <Controls />
         <MiniMap
           nodeColor={(node) => {

@@ -1,6 +1,10 @@
 import React, { FC } from 'react';
 import WorkFlowWrapper from 'components/WorkFlowTools/WorkFlowWrapper';
-import { FcBusinessman, FcBusinesswoman } from 'react-icons/fc';
+import {
+  FcBusinessman,
+  FcBusinesswoman,
+  FcBusinessContact,
+} from 'react-icons/fc';
 import { FaSwimmer } from 'react-icons/fa';
 import { MdOutlinePayments } from 'react-icons/md';
 import SwimsLogo from 'features/SwimsLogo';
@@ -10,10 +14,10 @@ interface RegistrationWorkflowProps {}
 const RegistrationProcess = [
   {
     id: 'start',
-    type: 'input', // input node
+    type: 'default',
     data: {
       label: (
-        <div className="flex flex-col">
+        <div className="flex flex-col border border-blue-700">
           <div className="flex flex-row justify-center">
             <FcBusinessman className="w-28 h-28" />
             <FcBusinesswoman className="w-28 h-28" />
@@ -26,10 +30,11 @@ const RegistrationProcess = [
         </div>
       ),
     },
+    draggable: false,
     position: { x: 0, y: 0 },
     className: 'w-20 text-lg',
   },
-  // default node
+
   {
     id: 'database',
     // you can also pass a React component as a label
@@ -49,6 +54,7 @@ const RegistrationProcess = [
         </div>
       ),
     },
+    draggable: false,
     position: { x: 0, y: 450 },
     className: 'w-20 text-lg',
   },
@@ -62,42 +68,46 @@ const RegistrationProcess = [
           <div className="flex justify-center">
             <MdOutlinePayments className="w-16 h-16" />
           </div>
-          Any other 3rd party vendor The 3rd parties will be responsible for
-          connecting to the API and setting up monthly billing for clubs that
-          have that feature.
-        </div>
-      ),
-    },
-    position: { x: 500, y: 1100 },
-    className: 'w-20 text-lg',
-    targetPosition: 'top',
-    sourcePosition: 'bottom',
-  },
-  {
-    id: 'payment',
-    type: 'default',
-    data: {
-      label: (
-        <div>
-          <div className="flex justify-center">
-            <MdOutlinePayments className="w-16 h-16" />
-          </div>
           A Club will pay LSCs like they normally do. USA Swimming will draw
           funds from the prior month of registrations on the 10th of each month.
         </div>
       ),
     },
+    draggable: false,
     position: { x: 500, y: 1100 },
     className: 'w-20 text-lg',
     targetPosition: 'top',
     sourcePosition: 'bottom',
   },
   {
-    id: 'Token',
+    id: '3rdPartyStart',
+    type: 'input',
     data: {
       label: (
         <div>
-          <FaSwimmer className="w-28 h-28" />
+          <div className="flex justify-center">
+            <FcBusinessContact className="w-16 h-16" />
+          </div>
+          The 3rd parties will be responsible for directing a USA Swimming
+          registrant to the USA Swimming OMR workflow if the club uses a 3rd
+          party vendor
+        </div>
+      ),
+    },
+    draggable: false,
+    position: { x: 500, y: 100 },
+    className: 'w-20 text-lg',
+    targetPosition: 'top',
+    sourcePosition: 'bottom',
+  },
+  {
+    id: 'token',
+    data: {
+      label: (
+        <div className="flex flex-col border border-red-700">
+          <div className="flex justify-center ">
+            <FaSwimmer className="w-28 h-28" />
+          </div>
           When the member completes the USA Swimming registration, they will
           receive a transaction token that they can use to move on to the
           team-specific form. The code will call the API that passes member
@@ -107,6 +117,7 @@ const RegistrationProcess = [
         </div>
       ),
     },
+    draggable: false,
     position: { x: 0, y: 1000 },
     className: 'w-20 text-lg',
     sourcePosition: 'top',
@@ -117,34 +128,37 @@ const RegistrationProcess = [
     id: 'i1-2',
     source: 'start',
     target: 'database',
+    style: { stroke: '#ff0000', strokeWidth: '5px' },
+  },
+  {
+    id: '3rd Party Start',
+    source: '3rdPartyStart',
+    target: 'start',
     animated: true,
     style: { stroke: '#ff0000', strokeWidth: '5px' },
   },
   {
-    id: '2-3',
+    id: 'Output',
     source: 'database',
-    target: 'output',
-    animated: true,
+    target: 'token',
     style: { stroke: '#ff0000', strokeWidth: '5px' },
   },
 
   {
-    id: '3-4o',
-    source: 'output',
-    target: 'payment',
-    style: { stroke: '#ff0000', strokeWidth: '5px' },
-  },
-  {
     id: 'payment-output',
-    source: 'payment',
-    target: 'output',
+    source: 'token',
+    target: '3rdPartyBilling',
+    animated: true,
     style: { stroke: '#ff0000', strokeWidth: '5px' },
   },
 ];
 
 const RegistrationWorkflow: FC<RegistrationWorkflowProps> = () => (
   <>
-    <h2 className="title">Registration Process - Parent/Member Flow</h2>
+    <h2>
+      <b>Registration Process</b>{' '}
+    </h2>
+    <h3> Parent/Member Flow</h3>
     <WorkFlowWrapper elements={RegistrationProcess} height="1000px" />
   </>
 );
