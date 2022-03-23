@@ -40,14 +40,34 @@ const Description: FC<DescriptionProps> = () => {
     },
   ];
 
-  const [markdown, setMarkown] = useRemark();
-  useEffect(() => {
-    setMarkown(description);
-  }, []);
+  const authSteps = [
+    {
+      description: 'Static IP',
+      more: 'The Vendor will submit a Static IP, that all API Request will go through.',
+      URL: '',
+    },
+    {
+      description:
+        'Purchase an SSL certificate from a trusted Certificate Authority.',
+      URL: 'https://cheapsslsecurity.com/blog/what-is-a-certificate-authority-ca/',
+    },
+    {
+      description: 'Install the certificate on their web server(s)',
+      URL: 'https://www.digicert.com/kb/ssl-certificate-installation.htm',
+    },
+    {
+      description: 'Create a client certificate and share it with us',
+      URL: 'https://www.golinuxcloud.com/openssl-create-client-server-certificate/',
+    },
+    {
+      description: 'Pass certificate info in each request to our APIs',
+      URL: 'https://learning.postman.com/docs/sending-requests/certificates/',
+    },
+  ];
 
   return (
     <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none">
-      {/* <h1 id="general-api" className="title">
+      <h1 id="general-api" className="title">
         General API
       </h1>
 
@@ -61,20 +81,20 @@ const Description: FC<DescriptionProps> = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Static IP</td>
-            <td>
-              The Vendor will submit a Static IP, that all API Request will go
-              through.
-            </td>
-          </tr>
-          <tr>
-            <td>Submit: TLS/SSL Cert</td>
-            <td>
-              The Vendor will SUBMIT a TLS/SSL Cert that will be submitted with
-              each request.
-            </td>
-          </tr>
+          {authSteps.map((step, index) => (
+            <tr key={index}>
+              <td>
+                <strong>STEP {index + 1}:</strong> {step.description}
+              </td>
+              {step.URL ? (
+                <td>
+                  <strong>Learn More:</strong> <a href={step.URL}>{step.URL}</a>
+                </td>
+              ) : (
+                <>{step.more && <td>{step.more}</td>}</>
+              )}{' '}
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -108,7 +128,7 @@ const Description: FC<DescriptionProps> = () => {
             </tr>
           ))}
         </tbody>
-      </table> */}
+      </table>
     </div>
   );
 };

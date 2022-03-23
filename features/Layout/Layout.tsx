@@ -31,9 +31,9 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
               alt="Swims USA Shield Logo"
             />
           </div>
-          {/* <TextLink href="#general-api" active={active} onClick={onClick}>
+          <TextLink href="#general-api" active={active} onClick={onClick}>
             General API
-          </TextLink> */}
+          </TextLink>
           <TextLink
             active={active}
             onClick={onClick}
@@ -41,7 +41,7 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
           >
             OMS Athlete
           </TextLink>
-          <TextLink active={active} onClick={onClick} href="#workflow">
+          <TextLink active={active} onClick={onClick} href="#workflows">
             Workflows
           </TextLink>
         </div>
