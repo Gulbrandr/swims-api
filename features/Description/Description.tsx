@@ -42,11 +42,6 @@ const Description: FC<DescriptionProps> = () => {
 
   const authSteps = [
     {
-      description: 'Static IP',
-      more: 'The Vendor will submit a Static IP, that all API Request will go through.',
-      URL: '',
-    },
-    {
       description:
         'Purchase an SSL certificate from a trusted Certificate Authority.',
       URL: 'https://cheapsslsecurity.com/blog/what-is-a-certificate-authority-ca/',
@@ -65,14 +60,38 @@ const Description: FC<DescriptionProps> = () => {
     },
   ];
 
+  const Endpoints = [
+    {
+      endpoint: 'GetClubsForVendor',
+      summary: 'Get all clubs for a vendor',
+      description: 'Get all clubs for a vendor',
+    },
+    {
+      endpoint: 'GetMemberDetailByClubId ',
+      summary: 'Get all clubs for a vendor',
+      description: 'Get all clubs for a vendor',
+      more: [
+        '1)	MemberId',
+        '2)	Date/Time Last Modified (this will the let Vendor grab updates that have been made from a certain timeframe.  The use-case would be they were down for 30 minutes and didn’t receive any of our POSTS.  They can refresh all of the updates that happened between the date/time they enter and now).',
+      ],
+    },
+    {
+      endpoint: 'GetRegistrationLinkByClubId ',
+      summary: 'Get Registration Link for a club',
+      description: 'Get Registration Link for a club',
+    },
+    {
+      endpoint: 'GetRegistrationLinkByClubId ',
+      summary: 'Get Registration Link for a club',
+    },
+  ];
+
   return (
     <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none">
       <h1 id="general-api" className="title">
         General API
       </h1>
-
       <h2 className="title">Authentication</h2>
-
       <table>
         <thead>
           <tr>
@@ -86,45 +105,29 @@ const Description: FC<DescriptionProps> = () => {
               <td>
                 <strong>STEP {index + 1}:</strong> {step.description}
               </td>
-              {step.URL ? (
+              {step.URL && (
                 <td>
                   <strong>Learn More:</strong> <a href={step.URL}>{step.URL}</a>
                 </td>
-              ) : (
-                <>{step.more && <td>{step.more}</td>}</>
-              )}{' '}
+              )}
             </tr>
           ))}
         </tbody>
       </table>
 
-      <h2 className="title">Request</h2>
-      <p>
-        Each API request must contain headers that identify the API version,
-        vendor and club credentials, and the API username. All requests must be
-        submitted from one of your servers to the USA Swimming server. This is
-        to ensure that security keys are never shared with a client application
-        such as a web browser. All requests must be submitted with HTTPS (SSL)
-        encryption. HTTP is not supported. TLS 1.2 is required.
-      </p>
-
-      <h2 className="title">Responses</h2>
-      <p>
-        All responses will be in JSON format. All responses will be in the
-        following format:
-      </p>
       <table>
         <thead>
           <tr>
-            <th>Status Code</th>
-            <th>Description</th>
+            <th>Endpoint</th>
+            <th>Summary</th>
           </tr>
         </thead>
         <tbody>
-          {Response.map((item) => (
-            <tr key={item.code + item.description}>
-              <td>{item.code}</td>
-              <td>{item.description}</td>
+          {Endpoints.map((step, index) => (
+            <tr key={index}>
+              <td>{step.endpoint}</td>
+              <td>{step.summary}</td>
+              {/* <td>{step.description}</td> */}
             </tr>
           ))}
         </tbody>
