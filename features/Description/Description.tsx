@@ -1,8 +1,6 @@
-import React, { FC, useEffect } from 'react';
-import { Markup } from 'interweave';
+import React, { FC, useEffect, useState } from 'react';
 import openapi from 'swims-swagger.yaml';
-import YAML from 'yaml';
-import { useRemark } from 'react-remark';
+import More from 'components/More';
 
 interface DescriptionProps {}
 
@@ -60,29 +58,64 @@ const Description: FC<DescriptionProps> = () => {
     },
   ];
 
-  const Endpoints = [
+  const Subscriptions = [
     {
-      endpoint: 'GetClubsForVendor',
-      summary: 'Get all clubs for a vendor',
-      description: 'Get all clubs for a vendor',
-    },
-    {
-      endpoint: 'GetMemberDetailByClubId ',
-      summary: 'Get all clubs for a vendor',
-      description: 'Get all clubs for a vendor',
+      type: 'Member Registration and Renewal',
+      summary: 'Generated when a Member Registers in SWIMS via OMR',
+      description:
+        'A Member will need to fully complete OMR from the club provided OMR link. The system will then send a event via the subscription indicating the member has signed.',
       more: [
-        '1)	MemberId',
-        '2)	Date/Time Last Modified (this will the let Vendor grab updates that have been made from a certain timeframe.  The use-case would be they were down for 30 minutes and didn’t receive any of our POSTS.  They can refresh all of the updates that happened between the date/time they enter and now).',
+        {
+          key: '1',
+          value: 'The vendor could call the GetRoster (with the memberID)',
+        },
+        {
+          key: '2',
+          value: 'determine if this is a registration or renewal, ',
+        },
+        {
+          key: '3',
+          value:
+            'and if it is a registration see if they have this member in their DB.',
+        },
+        {
+          key: '3',
+          value:
+            'From that, they can either create or update the member information.',
+        },
       ],
     },
     {
-      endpoint: 'GetRegistrationLinkByClubId ',
-      summary: 'Get Registration Link for a club',
-      description: 'Get Registration Link for a club',
+      type: 'Member Update',
+      summary: 'Generated when a member is updated with in the SWIMS',
+      description: 'When ever a member is updated in the system.',
+      more: [
+        {
+          key: '1',
+          value: 'Call GetRoster (with the memberID)',
+        },
+        {
+          key: '2',
+          value: 'compare to old and update system. ',
+        },
+      ],
     },
     {
-      endpoint: 'GetRegistrationLinkByClubId ',
-      summary: 'Get Registration Link for a club',
+      type: 'Club Register the Vendor in SWIMS',
+      summary: 'Generated when a Club selects and a approves a vendor in SWIMS',
+      description: '',
+      more: [
+        {
+          key: 'New Club',
+          value:
+            'vendor would call the Get Roster, and populate their tables with a complete club roster',
+        },
+        {
+          key: 'Existing Club',
+          value:
+            'vendor would call the Get Roster, and populate their tables with a complete club roster',
+        },
+      ],
     },
   ];
 
@@ -114,24 +147,28 @@ const Description: FC<DescriptionProps> = () => {
           ))}
         </tbody>
       </table>
+      <div className="">
+        <h3>Subscription to Events.</h3>
+        <p>
+          We will provide the ability for a Vendor to “subscribe” to certain
+          events that happen in SWIMS.
+        </p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Endpoint</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Endpoints.map((step, index) => (
-            <tr key={index}>
-              <td>{step.endpoint}</td>
-              <td>{step.summary}</td>
-              {/* <td>{step.description}</td> */}
-            </tr>
+        <h4>The data returned will include:</h4>
+        <code>
+          <ul className="list-disc">
+            <li>Event Name</li>
+            <li>OID</li>
+            <li> Payload</li>
+          </ul>
+        </code>
+
+        <div className="flex flex-col gap-4">
+          {Subscriptions.map((step, index) => (
+            <More key={index} step={step} />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

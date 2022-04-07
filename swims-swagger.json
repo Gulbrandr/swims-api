@@ -51,7 +51,8 @@
             "in": "query",
             "name": "lastModified",
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Date/Time Last Modified find all updates made on a member given a specefic time "
           }
         ],
         "responses": {
