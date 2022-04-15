@@ -159,7 +159,9 @@ const RegistrationWorkflow: FC<RegistrationWorkflowProps> = () => (
       <b>Registration Process</b>{' '}
     </h2>
     <h3> Parent/Member Flow</h3>
-    <WorkFlowWrapper elements={RegistrationProcess} height="1000px" />
+    <div className="flex flex-row">
+      <WorkFlowWrapper elements={RegistrationProcess} height="1000px" />
+    </div>
   </>
 );
 

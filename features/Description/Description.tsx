@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import openapi from 'swims-swagger.yaml';
 import More from 'components/More';
+import { BsBraces } from 'react-icons/bs';
 
 interface DescriptionProps {}
 
 const Description: FC<DescriptionProps> = () => {
-  const description = openapi.info['x-description'];
-
   const Response = [
     { code: '200 Success', description: 'OK' },
     {
@@ -66,38 +65,50 @@ const Description: FC<DescriptionProps> = () => {
         'A Member will need to fully complete OMR from the club provided OMR link. The system will then send a event via the subscription indicating the member has signed.',
       more: [
         {
-          key: '1',
-          value: 'The vendor could call the GetRoster (with the memberID)',
+          type: 'url',
+          value: 'GET: /swims/getMemberDetails/{clubId}/?memberId={memberId}',
         },
         {
-          key: '2',
-          value: 'determine if this is a registration or renewal, ',
+          value: 'IF: new member, add member data to the roster,',
         },
         {
-          key: '3',
-          value:
-            'and if it is a registration see if they have this member in their DB.',
-        },
-        {
-          key: '3',
-          value:
-            'From that, they can either create or update the member information.',
+          value: 'If: renewing member, update member data in the roster',
         },
       ],
+      example: [
+        '{',
+        '\t"eventSequence": 1234,',
+        '\t"eventType": "Member Registration Complete"',
+        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"eventData": {',
+        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '\t\t"memberIds": ["720B84E9E96FAC"]',
+        '}',
+      ],
     },
+
     {
       type: 'Member Update',
       summary: 'Generated when a member is updated with in the SWIMS',
       description: 'When ever a member is updated in the system.',
       more: [
         {
-          key: '1',
-          value: 'Call GetRoster (with the memberID)',
+          type: 'url',
+          value: 'GET: /swims/getMemberDetails/{clubId}/?memberId={memberId}',
         },
         {
-          key: '2',
-          value: 'compare to old and update system. ',
+          value: 'Update member data in the roster',
         },
+      ],
+      example: [
+        '{',
+        '\t"eventSequence": 1234,',
+        '\t"eventType": "Member Updated"',
+        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"eventData": {',
+        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '\t\t"memberIds": ["720B84E9E96FAC"]',
+        '}',
       ],
     },
     {
@@ -106,24 +117,36 @@ const Description: FC<DescriptionProps> = () => {
       description: '',
       more: [
         {
-          key: 'New Club',
-          value:
-            'vendor would call the Get Roster, and populate their tables with a complete club roster',
+          type: 'url',
+          value: 'GET: /swims/getMemberDetails/{clubId}',
         },
         {
           key: 'Existing Club',
-          value:
-            'vendor would call the Get Roster, and populate their tables with a complete club roster',
+          value: 'Populate Tables with a complete club roster',
         },
+      ],
+      example: [
+        '{',
+        '\t"eventSequence": Club Registered,',
+        '\t"eventType": "Member Updated"',
+        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"eventData": {',
+        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '}',
       ],
     },
   ];
 
   return (
-    <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none">
-      <h1 id="general-api" className="title">
-        General API
-      </h1>
+    <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none swagger-ui ">
+      <div className="info">
+        <hgroup className="main">
+          <h2 id="general-api" className=" title font-medium text-2xl">
+            General API
+          </h2>
+        </hgroup>
+      </div>
+
       <h2 className="title">Authentication</h2>
       <table>
         <thead>
@@ -147,21 +170,12 @@ const Description: FC<DescriptionProps> = () => {
           ))}
         </tbody>
       </table>
-      <div className="">
+      <div className="flex flex-col gap-4">
         <h3>Subscription to Events.</h3>
         <p>
           We will provide the ability for a Vendor to “subscribe” to certain
           events that happen in SWIMS.
         </p>
-
-        <h4>The data returned will include:</h4>
-        <code>
-          <ul className="list-disc">
-            <li>Event Name</li>
-            <li>OID</li>
-            <li> Payload</li>
-          </ul>
-        </code>
 
         <div className="flex flex-col gap-4">
           {Subscriptions.map((step, index) => (

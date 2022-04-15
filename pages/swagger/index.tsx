@@ -9,6 +9,8 @@ const SwaggerPage: NextPage = () => {
   return (
     <Layout>
       <Swagger />
+      HELLO
+      <Swagger />
     </Layout>
   );
 };

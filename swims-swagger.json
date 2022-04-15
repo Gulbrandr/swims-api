@@ -52,7 +52,7 @@
             "name": "lastModified",
             "type": "string",
             "format": "date-time",
-            "description": "Date/Time Last Modified find all updates made on a member given a specefic time "
+            "description": "Date/Time Last Modified find all updates made on a member given a specific time "
           }
         ],
         "responses": {

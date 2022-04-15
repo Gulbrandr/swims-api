@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Swagger from 'features/Swagger/';
 import Layout from 'features/Layout';
+import yaml from 'swims-swagger.yaml';
 
 const SwaggerPage: NextPage = () => {
   return (

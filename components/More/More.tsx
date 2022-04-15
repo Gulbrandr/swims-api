@@ -10,7 +10,7 @@ const More = ({ step }: any) => {
       } `}
     >
       <div
-        className="flex flex-row gap-2 items-center cursor-pointer collapse-title"
+        className="flex flex-row gap-2 items-center cursor-pointer collapse-title "
         onClick={() => setIsOpen(!isOpen)}
       >
         <strong>{step.type}</strong>
@@ -18,16 +18,31 @@ const More = ({ step }: any) => {
       </div>
 
       <div className="collapse-content">
-        <div>{step.description}</div>
         {step.more &&
           step.more.map((m, index) => (
-            <ul key={index} className="">
-              <li className="list-disc capitalize">
-                <strong>{m.key}:</strong>
-                <span> {m.value}</span>
+            <ol key={index} className="">
+              <li className="list-none capitalize flex flex-row gap-4 items-center">
+                <strong>{index + 1}:</strong>
+                {m.type ? (
+                  <pre className="not-prose"> {m.value}</pre>
+                ) : (
+                  <span> {m.value}</span>
+                )}
               </li>
-            </ul>
+            </ol>
           ))}
+        {step.example && (
+          <>
+            <h4>Example:</h4>
+            <pre>
+              <code className="language-javascript flex flex-col not-prose text-sm shadow">
+                {step.example?.map((s) => (
+                  <pre className="py-0.5">{s}</pre>
+                ))}
+              </code>
+            </pre>
+          </>
+        )}
       </div>
     </div>
   );

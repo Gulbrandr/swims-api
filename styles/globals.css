@@ -15,3 +15,7 @@ table {
 .react-flow__edge-path {
   @apply w-2;
 }
+
+.mockup-code pre {
+  @apply ml-1;
+}

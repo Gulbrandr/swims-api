@@ -2,6 +2,9 @@ import React, { FC } from 'react';
 import TextLink from 'components/TextLink';
 import Description from 'features/Description';
 import WorkFlows from 'features/WorkFlows';
+
+import { FaSwimmer } from 'react-icons/fa';
+import { FcWorkflow, FcDatabase } from 'react-icons/fc';
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -31,23 +34,35 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
               alt="Swims USA Shield Logo"
             />
           </div>
-          <TextLink href="#general-api" active={active} onClick={onClick}>
-            General API
+          <TextLink
+            href="#general-api"
+            active={active}
+            onClick={onClick}
+            icon="code"
+          >
+            <FcDatabase className="w-6 h-6 bg-secondary rounded" /> General API
           </TextLink>
           <TextLink
             active={active}
             onClick={onClick}
             href="#operations-tag-OmsAthlete"
+            icon="swimming"
           >
+            <FaSwimmer className="w-6 h-6 px-0.5 text-white bg-secondary rounded " />{' '}
             OMS Athlete
           </TextLink>
-          <TextLink active={active} onClick={onClick} href="#workflows">
-            Workflows
+          <TextLink
+            active={active}
+            onClick={onClick}
+            href="#workflows"
+            icon="workflow"
+          >
+            <FcWorkflow className="w-6 h-6 bg-secondary rounded" /> Workflows
           </TextLink>
         </div>
       </nav>
 
-      <div className="col-start-2 col-span-2 row-start-1 row-span-1  w-full swagger-ui">
+      <div className="col-start-2 col-span-2 row-start-1 row-span-1  w-full ">
         <Description />
       </div>
       <main className="col-start-2 col-span-2 row-start-2 row-span-1 p-8">
