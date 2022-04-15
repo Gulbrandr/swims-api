@@ -5,7 +5,6 @@ interface TextLinkProps {
   children?: React.ReactNode;
   props?: any;
   active?: string;
-  icon;
   onClick: (href: any) => void;
 }
 
