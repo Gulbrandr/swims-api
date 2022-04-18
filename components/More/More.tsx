@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
-const More = ({ step }: any) => {
+const More = ({ key, step }: any) => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   return (
     <div
+      key={key}
       className={` card flex flex-col gap-4 collapse collapse-arrow shadow-lg border ${
         isOpen && 'collapse-open'
       } `}

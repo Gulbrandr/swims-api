@@ -38,7 +38,7 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
             href="#general-api"
             active={active}
             onClick={onClick}
-            icon="code"
+            
           >
             <FcDatabase className="w-6 h-6 bg-secondary rounded" /> General API
           </TextLink>
@@ -46,7 +46,7 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
             active={active}
             onClick={onClick}
             href="#operations-tag-OmsAthlete"
-            icon="swimming"
+           
           >
             <FaSwimmer className="w-6 h-6 px-0.5 text-white bg-secondary rounded " />{' '}
             OMS Athlete
@@ -55,7 +55,7 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
             active={active}
             onClick={onClick}
             href="#workflows"
-            icon="workflow"
+           
           >
             <FcWorkflow className="w-6 h-6 bg-secondary rounded" /> Workflows
           </TextLink>
