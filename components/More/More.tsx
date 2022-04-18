@@ -18,6 +18,21 @@ const More = ({ step }: any) => {
       </div>
 
       <div className="collapse-content">
+        {step.example && (
+          <>
+            <h4>
+              Event:<span className="text-sm">(example)</span>
+            </h4>
+            <pre>
+              <code className="language-javascript flex flex-col not-prose text-sm shadow">
+                {step.example?.map((s) => (
+                  <pre className="py-0.5">{s}</pre>
+                ))}
+              </code>
+            </pre>
+          </>
+        )}
+        After receiving the above event.
         {step.more &&
           step.more.map((m, index) => (
             <ol key={index} className="">
@@ -31,18 +46,6 @@ const More = ({ step }: any) => {
               </li>
             </ol>
           ))}
-        {step.example && (
-          <>
-            <h4>Example:</h4>
-            <pre>
-              <code className="language-javascript flex flex-col not-prose text-sm shadow">
-                {step.example?.map((s) => (
-                  <pre className="py-0.5">{s}</pre>
-                ))}
-              </code>
-            </pre>
-          </>
-        )}
       </div>
     </div>
   );

@@ -72,7 +72,7 @@ const Description: FC<DescriptionProps> = () => {
           value: 'IF: new member, add member data to the roster,',
         },
         {
-          value: 'If: renewing member, update member data in the roster',
+          value: 'IF: renewing member, update member data in the roster',
         },
       ],
       example: [
