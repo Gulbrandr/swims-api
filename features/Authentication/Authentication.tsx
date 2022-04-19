@@ -20,7 +20,7 @@ const Authentication: FC<AuthenticationProps> = () => {
           className="flex flex-row items-center  cursor-pointer collapse-title "
           onClick={() => setServerOpen(!serverOpen)}
         >
-          Auth Details
+          Authentication Details
         </div>
         <div
           className="collapse-content flex flex-row "
