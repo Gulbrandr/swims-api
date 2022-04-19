@@ -7,7 +7,7 @@
   "paths": {
     "/swims/getVendorClubs/vendor/{vendorId}": {
       "get": {
-        "tags": ["OmsAthlete"],
+        "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
@@ -24,7 +24,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/OmsVendorClubs"
+                "$ref": "#/definitions/SwimsThirdPartyVendorClubs"
               }
             }
           }
@@ -33,7 +33,7 @@
     },
     "/swims/getMemberDetails/club/{clubId}": {
       "get": {
-        "tags": ["OmsAthlete"],
+        "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
@@ -51,8 +51,7 @@
             "in": "query",
             "name": "lastModified",
             "type": "string",
-            "format": "date-time",
-            "description": "Date/Time Last Modified find all updates made on a member given a specific time "
+            "format": "date-time"
           }
         ],
         "responses": {
@@ -61,24 +60,23 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/OmsAthleteDetail"
+                "$ref": "#/definitions/SwimsMemberDetail"
               }
             }
           }
         }
       }
     },
-    "/swims/getOMRLink/club/{clubId}": {
+    "/swims/getRegistrationLink/club/{clubId}": {
       "get": {
-        "tags": ["OmsAthlete"],
+        "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
             "in": "path",
             "name": "clubId",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           }
         ],
         "responses": {
@@ -90,10 +88,81 @@
           }
         }
       }
+    },
+    "/swims/getAllEventsWithinDateTime/vendor/{vendorId}/from/{fromDateTime}": {
+      "get": {
+        "tags": ["SwimsThirdParty"],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vendorId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "fromDateTime",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "query",
+            "name": "toDateTime",
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SwimsEvent"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "OmsAthleteContactInformation": {
+    "SwimsEvent": {
+      "type": "object",
+      "properties": {
+        "eventSequence": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "eventType": {
+          "type": "string"
+        },
+        "ouId": {
+          "type": "string"
+        },
+        "eventData": {
+          "$ref": "#/definitions/SwimsEventData"
+        }
+      }
+    },
+    "SwimsEventData": {
+      "type": "object",
+      "properties": {
+        "vendorRecordId": {
+          "type": "string"
+        },
+        "memberIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SwimsMemberContactInformation": {
       "type": "object",
       "properties": {
         "contactFirstName": {
@@ -110,7 +179,7 @@
         }
       }
     },
-    "OmsAthleteDetail": {
+    "SwimsMemberDetail": {
       "type": "object",
       "properties": {
         "memberId": {
@@ -138,20 +207,23 @@
           "type": "string"
         },
         "contactInformation": {
-          "$ref": "#/definitions/OmsAthleteContactInformation"
+          "$ref": "#/definitions/SwimsMemberContactInformation"
         },
         "registrations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/OmsAthleteRegistration"
+            "$ref": "#/definitions/SwimsMemberRegistration"
           }
         }
       }
     },
-    "OmsAthleteRegistration": {
+    "SwimsMemberRegistration": {
       "type": "object",
       "properties": {
         "registrationDate": {
+          "type": "string"
+        },
+        "expirationDate": {
           "type": "string"
         },
         "offeringId": {
@@ -174,7 +246,7 @@
         }
       }
     },
-    "OmsVendorClubs": {
+    "SwimsThirdPartyVendorClubs": {
       "type": "object",
       "properties": {
         "lscCode": {

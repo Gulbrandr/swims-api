@@ -26,8 +26,10 @@ const More = ({ key, step }: any) => {
             </h4>
             <pre>
               <code className="language-javascript flex flex-col not-prose text-sm shadow">
-                {step.example?.map((s) => (
-                  <pre className="py-0.5">{s}</pre>
+                {step.example?.map((s, index) => (
+                  <pre key={index} className="py-0.5">
+                    {s}
+                  </pre>
                 ))}
               </code>
             </pre>

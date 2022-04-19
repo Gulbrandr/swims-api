@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import openapi from 'swims-swagger.yaml';
 import More from 'components/More';
 import { BsBraces } from 'react-icons/bs';
+import Authentication from 'features/Authentication';
 
 interface DescriptionProps {}
 
@@ -138,49 +139,30 @@ const Description: FC<DescriptionProps> = () => {
   ];
 
   return (
-    <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none swagger-ui ">
-      <div className="info">
-        <hgroup className="main">
-          <h2 id="general-api" className=" title font-medium text-2xl">
-            General API
-          </h2>
-        </hgroup>
-      </div>
+    <div className="flex flex-col justify-center pt-8">
+      <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none swagger-ui ">
+        <div className="info">
+          <hgroup className="main">
+            <h2 id="general-api" className=" title font-medium text-2xl">
+              General API
+            </h2>
+          </hgroup>
+        </div>
 
-      <h2 className="title">Authentication</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Requirement</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {authSteps.map((step, index) => (
-            <tr key={index}>
-              <td>
-                <strong>STEP {index + 1}:</strong> {step.description}
-              </td>
-              {step.URL && (
-                <td>
-                  <strong>Learn More:</strong> <a href={step.URL}>{step.URL}</a>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex flex-col gap-4">
-        <h3>Subscription to Events.</h3>
-        <p>
-          We will provide the ability for a Vendor to “subscribe” to certain
-          events that happen in SWIMS.
-        </p>
-
+        <h2 className="title">Authentication</h2>
+        <Authentication />
         <div className="flex flex-col gap-4">
-          {Subscriptions.map((step, index) => (
-            <More key={index} step={step} />
-          ))}
+          <h3>Subscription to Events.</h3>
+          <p>
+            We will provide the ability for a Vendor to “subscribe” to certain
+            events that happen in SWIMS.
+          </p>
+
+          <div className="flex flex-col gap-4">
+            {Subscriptions.map((step, index) => (
+              <More key={index} step={step} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
