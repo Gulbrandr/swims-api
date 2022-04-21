@@ -118,11 +118,20 @@ const Description: FC<DescriptionProps> = () => {
       description: '',
       more: [
         {
+          value: 'Get List of Clubs for a Vendor',
+        },
+        {
+          type: 'url',
+          value: 'GET: /swims/getVendorClubs/vendor/{vendorId}',
+        },
+        {
+          value: 'For All New Clubs, add Members to Club Roster',
+        },
+        {
           type: 'url',
           value: 'GET: /swims/getMemberDetails/{clubId}',
         },
         {
-          key: 'Existing Club',
           value: 'Populate Tables with a complete club roster',
         },
       ],
@@ -148,7 +157,38 @@ const Description: FC<DescriptionProps> = () => {
             </h2>
           </hgroup>
         </div>
+        <h1>Onboarding and Authentication</h1>
 
+        <ol>
+          <li>Certificate from a known Certificate Authority</li>
+          <li>Password Certificate</li>
+          <li>URI where we send the EVENTS to. </li>
+          <li>Club To Test with.</li>
+        </ol>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Requirement</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {authSteps.map((step, index) => (
+              <tr key={index}>
+                <td>
+                  <strong>STEP {index + 1}:</strong> {step.description}
+                </td>
+                {step.URL && (
+                  <td>
+                    <strong>Learn More:</strong>{' '}
+                    <a href={step.URL}>{step.URL}</a>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <h2 className="title">Authentication</h2>
         <Authentication />
         <div className="flex flex-col gap-4">
