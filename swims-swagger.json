@@ -140,7 +140,7 @@
         "eventType": {
           "type": "string"
         },
-        "ouId": {
+        "clubId": {
           "type": "string"
         },
         "eventData": {
@@ -154,7 +154,10 @@
         "vendorRecordId": {
           "type": "string"
         },
-        "memberIds": {
+        "eventDataContextName": {
+          "type": "string"
+        },
+        "contextIds": {
           "type": "array",
           "items": {
             "type": "string"
@@ -226,9 +229,21 @@
         "expirationDate": {
           "type": "string"
         },
-        "offeringId": {
+        "registrationId": {
           "format": "int32",
           "type": "integer"
+        },
+        "registrationType": {
+          "type": "string"
+        },
+        "transactionType": {
+          "type": "string"
+        },
+        "lscCode": {
+          "type": "string"
+        },
+        "clubCode": {
+          "type": "string"
         },
         "usasFee": {
           "format": "double",
@@ -239,6 +254,9 @@
           "type": "number"
         },
         "isRenewal": {
+          "type": "boolean"
+        },
+        "isAttached": {
           "type": "boolean"
         },
         "memberGoodStandingExpirationDate": {
@@ -255,7 +273,7 @@
         "clubCode": {
           "type": "string"
         },
-        "ouId": {
+        "clubId": {
           "type": "string"
         }
       }

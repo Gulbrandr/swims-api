@@ -34,31 +34,25 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
               alt="Swims USA Shield Logo"
             />
           </div>
-          <TextLink
-            href="#general-api"
-            active={active}
-            onClick={onClick}
-            
-          >
+          <TextLink href="#general-api" active={active} onClick={onClick}>
             <FcDatabase className="w-6 h-6 bg-secondary rounded" /> General API
           </TextLink>
           <TextLink
             active={active}
             onClick={onClick}
             href="#operations-tag-OmsAthlete"
-           
           >
             <FaSwimmer className="w-6 h-6 px-0.5 text-white bg-secondary rounded " />{' '}
             OMS Athlete
           </TextLink>
-          <TextLink
+          {/* <TextLink
             active={active}
             onClick={onClick}
             href="#workflows"
            
           >
             <FcWorkflow className="w-6 h-6 bg-secondary rounded" /> Workflows
-          </TextLink>
+          </TextLink> */}
         </div>
       </nav>
 
@@ -68,9 +62,9 @@ const Layout: FC<LayoutProps> = ({ children }: LayoutProps) => {
       <main className="col-start-2 col-span-2 row-start-2 row-span-1 p-8">
         {children}
       </main>
-      <div className="col-start-2 col-span-2 row-start-3 row-span-1 p-8">
+      {/* <div className="col-start-2 col-span-2 row-start-3 row-span-1 p-8">
         <WorkFlows />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -80,17 +80,17 @@ const Description: FC<DescriptionProps> = () => {
         '{',
         '\t"eventSequence": 1234,',
         '\t"eventType": "Member Registration Complete"',
-        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"clubId": "EFD6F74613444017B0DB1884AADBC117"',
         '\t"eventData": {',
-        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '\t\t"vendorId": "DB1884AADBC117"',
         '\t\t"memberIds": ["720B84E9E96FAC"]',
         '}',
       ],
     },
 
     {
-      type: 'Member Update',
-      summary: 'Generated when a member is updated with in the SWIMS',
+      type: 'Updated, Upgraded, Transfer',
+      summary: 'Generated when a member is updated within the SWIMS',
       description: 'When ever a member is updated in the system.',
       more: [
         {
@@ -105,15 +105,18 @@ const Description: FC<DescriptionProps> = () => {
         '{',
         '\t"eventSequence": 1234,',
         '\t"eventType": "Member Updated"',
-        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"clubId": "EFD6F74613444017B0DB1884AADBC117"',
         '\t"eventData": {',
-        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '\t\t"vendorId": "DB1884AADBC117"',
         '\t\t"memberIds": ["720B84E9E96FAC"]',
         '}',
       ],
     },
+  ];
+
+  const clubEvents = [
     {
-      type: 'Club Register the Vendor in SWIMS',
+      type: 'Club Activates/Deactivates the Vendor in SWIMS',
       summary: 'Generated when a Club selects and a approves a vendor in SWIMS',
       description: '',
       more: [
@@ -137,11 +140,11 @@ const Description: FC<DescriptionProps> = () => {
       ],
       example: [
         '{',
-        '\t"eventSequence": Club Registered,',
+        '\t"eventSequence": "002",',
         '\t"eventType": "Member Updated"',
-        '\t"ouId": "EFD6F74613444017B0DB1884AADBC117"',
+        '\t"clubId": "EFD6F74613444017B0DB1884AADBC117"',
         '\t"eventData": {',
-        '\t\t"vendorRecordId": "DB1884AADBC117"',
+        '\t\t"vendorId": "DB1884AADBC117"',
         '}',
       ],
     },
@@ -158,48 +161,64 @@ const Description: FC<DescriptionProps> = () => {
           </hgroup>
         </div>
         <h1>Onboarding and Authentication</h1>
-
+        The following will need to be sent to Swims to onboard a vendor. The
+        Vendor form below is not needed to test the SWIMS Vendor API but will
+        need to be completed before a vendor is given production access.
         <ol>
-          <li>Certificate from a known Certificate Authority</li>
-          <li>Password Certificate</li>
-          <li>URI where we send the EVENTS to. </li>
-          <li>Club To Test with.</li>
+          <li>Vendor Form: ( wip )</li>
+          <li>Vendors Using Events will need</li>
+          <ul>
+            <li>URI where we send the EVENTS </li>
+            <li>
+              The Vendor will create a Certificate and Provide To Swims the
+              following. This will be sent with each event to ensure the
+              security of our event endpoint.
+            </li>
+            <ul>
+              <li>RootCertificate.cer</li>
+              <li>ClientCertificate.pfx</li>
+              <li>Client Certificate Password</li>
+            </ul>
+          </ul>
+          <li>
+            Club ID to Test With: this should be a club you already have access
+            via legacy API. New Vendors will be given a random test club.
+          </li>
         </ol>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Requirement</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {authSteps.map((step, index) => (
-              <tr key={index}>
-                <td>
-                  <strong>STEP {index + 1}:</strong> {step.description}
-                </td>
-                {step.URL && (
-                  <td>
-                    <strong>Learn More:</strong>{' '}
-                    <a href={step.URL}>{step.URL}</a>
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
         <h2 className="title">Authentication</h2>
         <Authentication />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <h3>Subscription to Events.</h3>
           <p>
             We will provide the ability for a Vendor to “subscribe” to certain
             events that happen in SWIMS.
           </p>
+          <h4>Member Events</h4>
+
+          <dl className="pl-4">
+            <dt>Member Registers</dt>
+            <dt>Member Renewal</dt>
+            <dt>Member Updated</dt>
+            <dt>Member Upgrade</dt>
+            <dt>Member Transfer From Club</dt>
+            <dt>Member Transfer To Club</dt>
+            <dt>Member Cancels</dt>
+          </dl>
 
           <div className="flex flex-col gap-4">
             {Subscriptions.map((step, index) => (
+              <More key={index} step={step} />
+            ))}
+          </div>
+          <hr></hr>
+          <h4>Club Events</h4>
+
+          <dl className="pl-4">
+            <dt>Club Activates Vendor</dt>
+            <dt>Club Deactivates Vendor</dt>
+          </dl>
+          <div className="flex flex-col gap-4">
+            {clubEvents.map((step, index) => (
               <More key={index} step={step} />
             ))}
           </div>
