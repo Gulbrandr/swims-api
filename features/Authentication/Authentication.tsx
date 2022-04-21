@@ -20,7 +20,51 @@ const Authentication: FC<AuthenticationProps> = () => {
           className="flex flex-row items-center  cursor-pointer collapse-title "
           onClick={() => setServerOpen(!serverOpen)}
         >
-          Authentication Details
+          Authentication (Creating a Root Certificate)
+        </div>
+        <div
+          className="collapse-content flex flex-row "
+          style={{ height: '450px' }}
+        >
+          <iframe
+            className="flex w-full h-full"
+            src="./security/root_cert.html"
+          />
+        </div>
+      </div>
+      <div
+        data-testid="Authentication"
+        className={` card flex flex-col  gap-4 collapse collapse-arrow shadow-lg border prose max-w-none  ${
+          serverOpen && 'collapse-open'
+        } `}
+      >
+        <div
+          className="flex flex-row items-center  cursor-pointer collapse-title "
+          onClick={() => setServerOpen(!serverOpen)}
+        >
+          Authentication (Creating a Server Certificate)
+        </div>
+        <div
+          className="collapse-content flex flex-row "
+          style={{ height: '450px' }}
+        >
+          <iframe
+            className="flex w-full h-full"
+            src="./security/server_cert.html"
+          />
+        </div>
+      </div>
+      <div
+        data-testid="Authentication"
+        className={` card flex flex-col  gap-4 collapse collapse-arrow shadow-lg border prose max-w-none  ${
+          serverOpen && 'collapse-open'
+        } `}
+      >
+        <div
+          className="flex flex-row items-center  cursor-pointer collapse-title "
+          onClick={() => setServerOpen(!serverOpen)}
+        >
+          Authentication (Adding Swims Certificate to the Server)
         </div>
         <div
           className="collapse-content flex flex-row "
