@@ -296,18 +296,18 @@ const Description: FC<DescriptionProps> = () => {
               button link.
             </li>
             <li>
-              the New Club is entered as well as other transfer data needed.
+              The New Club is entered as well as other transfer data needed.
             </li>
             <li>
               This creates 2 new events.
               <ul>
                 <li>
                   <strong>Member Transfer From Club Event</strong> Received by
-                  the Club that the member is transferring out of
+                  the Club that the member is transferring out of.
                 </li>
                 <li>
                   <strong>Member Transfer To Club Event</strong> Received by the
-                  Club that the member is transferring into
+                  Club that the member is transferring into.
                 </li>
                 <span className="alert alert-warning shadow-lg md:w-3/4">
                   <div>
@@ -391,7 +391,7 @@ const Description: FC<DescriptionProps> = () => {
           {fields.map((field, index) => (
             <dl key={index}>
               <dt className="font-semibold">{field.term}:</dt>
-              <dd className="pl-4">{field.definition}</dd>
+              <dd className="pl-4 capitalize">{field.definition}</dd>
             </dl>
           ))}
         </div>
