@@ -89,7 +89,7 @@ const Description: FC<DescriptionProps> = () => {
     },
 
     {
-      type: 'Updated, Upgraded, Transfer',
+      type: 'Updated, Upgraded',
       summary: 'Generated when a member is updated within the SWIMS',
       description: 'When ever a member is updated in the system.',
       more: [
@@ -147,6 +147,79 @@ const Description: FC<DescriptionProps> = () => {
         '\t\t"vendorId": "DB1884AADBC117"',
         '}',
       ],
+    },
+  ];
+
+  const fields = [
+    {
+      term: 'memberId',
+      definition:
+        'New randomly-generated 14 alphanumeric ID that will be a member’s unique identifier',
+    },
+    {
+      term: 'oldUsasId ',
+      definition:
+        'Old USA Swimming 14 character ID using first name, middle initial, last name, and birthdate',
+    },
+    {
+      term: 'competitionCategory',
+      definition: 'New terminology used for Gender',
+    },
+    {
+      term: 'contactInformation',
+      definition:
+        'A Member’s primary contact (Guardian/Emergency Contact depending on age) listed in SWIMS',
+    },
+    {
+      term: 'registrationDate',
+      definition: 'The date of a member registration',
+    },
+    {
+      term: 'expirationDate',
+      definition: 'the date that a member’s registration expires',
+    },
+    { term: 'offeringId', definition: 'The id of the registration type' },
+    {
+      term: 'RegistrationType',
+      definition: 'Descriptor for the registration type',
+    },
+    { term: 'TransactionType', definition: 'Registration, Upgrade, or Cancel' },
+    {
+      term: 'usasFee',
+      definition:
+        'USA Swimming’s membership fee. For Upgrades, this field will show the delta between original usasFee and the upgraded membership usasFee.',
+    },
+    {
+      term: 'lscFee',
+      definition:
+        'The member’s Local Swimming Committee membership fee. For Upgrades, this field will show the delta between original lscFee and the upgraded membership lscFee.',
+    },
+    {
+      term: 'IsRenewal',
+      definition: 'Is the registration for an existing member or a new member',
+    },
+    {
+      term: 'memberGoodStandingExpirationDate',
+      definition: 'The date that a member is no longer “In Good Standing”. ',
+    },
+    {
+      term: 'In Good Standing',
+      definition:
+        'used to describe all member requirements by registration type are met. \nFor example, an 18+ year old athlete must complete Athlete Protection Training to be a “Member in Good Standing”',
+    },
+    {
+      term: 'clubId',
+      definition: 'Alphanumeric ID that is a club’s unique identifier',
+    },
+    {
+      term: 'vendorId',
+      definition: 'Alphanumeric ID that is a vendor’s unique identifier',
+    },
+
+    {
+      term: 'Upgrade',
+      definition:
+        'When a member upgrades their membership, their initial membership will expire (expirationDate is set to yesterday). There will be a new registration record with a registrationDate of today and an expirationDate of the end of the season.',
     },
   ];
 
@@ -210,6 +283,95 @@ const Description: FC<DescriptionProps> = () => {
               <More key={index} step={step} />
             ))}
           </div>
+
+          <h5 className="font-semibold">Member Transfers</h5>
+          <p>A special set of events happens when a member transfers clubs.</p>
+          <ol>
+            <li>
+              In Swims the Transfer is initiated from the Member Details Page by
+              clicking the:{' '}
+              <span className="text-sky-500 underline cursor-pointer">
+                initiate transfer
+              </span>{' '}
+              button link.
+            </li>
+            <li>
+              the New Club is entered as well as other transfer data needed.
+            </li>
+            <li>
+              This creates 2 new events.
+              <ul>
+                <li>
+                  <strong>Member Transfer From Club Event</strong> Received by
+                  the Club that the member is transferring out of
+                </li>
+                <li>
+                  <strong>Member Transfer To Club Event</strong> Received by the
+                  Club that the member is transferring into
+                </li>
+                <span className="alert alert-warning shadow-lg md:w-3/4">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="stroke-current h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                    <strong>Note:</strong> the Vendor Software will only receive
+                    both events if both clubs are activated for the Vendor.
+                  </div>
+                </span>
+              </ul>
+            </li>
+            <li>
+              Similar to the Member Registration Event, the Vendor Software will
+              need to do the following.
+            </li>
+            <li>
+              The Vendor will need to reconcile the member data in their system.
+            </li>
+            <ul>
+              <span>
+                <strong>IF:</strong> the member is not found in the Vendor’s
+                system, the Vendor will call.
+              </span>
+              <ul>
+                <li>
+                  <pre className="w-1/2">
+                    {`GET: /swims/getMemberDetails/{clubId}/?memberId={memberId}`}
+                  </pre>
+                </li>
+                <li>
+                  <strong>THEN:</strong> create the member in their system.
+                </li>
+              </ul>
+            </ul>
+            <ul>
+              <span>
+                <strong>IF:</strong> the is already in the Vendor’s system, the
+                Vendor will call.
+              </span>
+              <ul>
+                <li>
+                  <pre className="w-1/2">
+                    {`GET: /swims/getMemberDetails/{clubId}/?memberId={memberId}`}
+                  </pre>
+                </li>
+                <li>
+                  <strong>THEN:</strong> update the member in their system, and
+                  preform any club transfer procedures in the Vendors System.
+                </li>
+              </ul>
+            </ul>
+          </ol>
+
           <hr></hr>
           <h4>Club Events</h4>
 
@@ -222,6 +384,16 @@ const Description: FC<DescriptionProps> = () => {
               <More key={index} step={step} />
             ))}
           </div>
+
+          <hr></hr>
+          <h3>Swims Terms</h3>
+
+          {fields.map((field, index) => (
+            <dl key={index}>
+              <dt className="font-semibold">{field.term}:</dt>
+              <dd className="pl-4">{field.definition}</dd>
+            </dl>
+          ))}
         </div>
       </div>
     </div>

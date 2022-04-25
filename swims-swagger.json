@@ -99,7 +99,8 @@
             "name": "vendorId",
             "required": true,
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Alphanumeric ID that is a vendor’s unique identifier"
           },
           {
             "in": "path",
