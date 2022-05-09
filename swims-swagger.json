@@ -9,6 +9,7 @@
       "get": {
         "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
+        "description": "Get all the clubs that a vendor has access to.",
         "parameters": [
           {
             "in": "path",
@@ -35,6 +36,7 @@
       "get": {
         "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
+        "description": "Get the details of a member or a list of members for a club. \nIf the MemberId is not provided, the list of members for the club is returned, otherwise the details of the member are returned. \nThe Registration Array returns the most recent registration of a member [athlete, coach, official, misc]",
         "parameters": [
           {
             "in": "path",
@@ -83,7 +85,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "string"
+              "type": "object",
+              "$ref": "#/definitions/SwimsRegistrationLink"
             }
           }
         }
@@ -185,6 +188,7 @@
     },
     "SwimsMemberDetail": {
       "type": "object",
+      "description": "Member details",
       "properties": {
         "memberId": {
           "type": "string"
@@ -217,7 +221,52 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/SwimsMemberRegistration"
-          }
+          },
+          "description": "List of most recent registrations of each type for a member",
+          "example": [
+            {
+              "registrationDate": "1652122270",
+              "expirationDate": "1715280670",
+              "registrationId": 49492932,
+              "registrationType": "coach",
+              "transactionType": "string",
+              "lscCode": "",
+              "clubCode": "string",
+              "usasFee": 400,
+              "lscFee": 200,
+              "isRenewal": true,
+              "isAttached": true,
+              "memberGoodStandingExpirationDate": "1715280670"
+            },
+            {
+              "registrationDate": "1652122270",
+              "expirationDate": "1715280670",
+              "registrationId": 49492932,
+              "registrationType": "official",
+              "transactionType": "string",
+              "lscCode": "",
+              "clubCode": "string",
+              "usasFee": 400,
+              "lscFee": 200,
+              "isRenewal": true,
+              "isAttached": true,
+              "memberGoodStandingExpirationDate": "1715280670"
+            },
+            {
+              "registrationDate": "1652122270",
+              "expirationDate": "1715280670",
+              "registrationId": 49492932,
+              "registrationType": "athlete",
+              "transactionType": "string",
+              "lscCode": "",
+              "clubCode": "string",
+              "usasFee": 400,
+              "lscFee": 200,
+              "isRenewal": true,
+              "isAttached": true,
+              "memberGoodStandingExpirationDate": "1715280670"
+            }
+          ]
         }
       }
     },
@@ -235,7 +284,8 @@
           "type": "integer"
         },
         "registrationType": {
-          "type": "string"
+          "type": "string",
+          "example": "coach"
         },
         "transactionType": {
           "type": "string"
@@ -276,6 +326,19 @@
         },
         "clubId": {
           "type": "string"
+        }
+      }
+    },
+    "SwimsRegistrationLink": {
+      "type": "object",
+      "properties": {
+        "vendorKey": {
+          "type": "string",
+          "example": "50i459494294842938nfudfh"
+        },
+        "registrationUrl": {
+          "type": "string",
+          "example": "https://www.usaswimming.org/registration/49492932?vendorKey=50i459494294842938nfudfh"
         }
       }
     }
