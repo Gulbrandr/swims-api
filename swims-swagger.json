@@ -5,20 +5,11 @@
     "version": "v1"
   },
   "paths": {
-    "/swims/getVendorClubs/vendor/{vendorId}": {
+    "/swims/getVendorClubs/vendor": {
       "get": {
         "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
         "description": "Get all the clubs that a vendor has access to.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "vendorId",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -85,26 +76,17 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "object",
-              "$ref": "#/definitions/SwimsRegistrationLink"
+              "type": "string"
             }
           }
         }
       }
     },
-    "/swims/getAllEventsWithinDateTime/vendor/{vendorId}/from/{fromDateTime}": {
+    "/swims/getAllEventsWithinDateTime/from/{fromDateTime}": {
       "get": {
         "tags": ["SwimsThirdParty"],
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
-          {
-            "in": "path",
-            "name": "vendorId",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": "Alphanumeric ID that is a vendor’s unique identifier"
-          },
           {
             "in": "path",
             "name": "fromDateTime",
@@ -141,6 +123,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "eventTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
         "eventType": {
           "type": "string"
         },
@@ -148,24 +134,10 @@
           "type": "string"
         },
         "eventData": {
-          "$ref": "#/definitions/SwimsEventData"
-        }
-      }
-    },
-    "SwimsEventData": {
-      "type": "object",
-      "properties": {
-        "vendorRecordId": {
           "type": "string"
         },
-        "eventDataContextName": {
+        "vendorUrl": {
           "type": "string"
-        },
-        "contextIds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -188,7 +160,6 @@
     },
     "SwimsMemberDetail": {
       "type": "object",
-      "description": "Member details",
       "properties": {
         "memberId": {
           "type": "string"
@@ -284,8 +255,7 @@
           "type": "integer"
         },
         "registrationType": {
-          "type": "string",
-          "example": "coach"
+          "type": "string"
         },
         "transactionType": {
           "type": "string"
@@ -326,19 +296,6 @@
         },
         "clubId": {
           "type": "string"
-        }
-      }
-    },
-    "SwimsRegistrationLink": {
-      "type": "object",
-      "properties": {
-        "vendorKey": {
-          "type": "string",
-          "example": "50i459494294842938nfudfh"
-        },
-        "registrationUrl": {
-          "type": "string",
-          "example": "https://www.usaswimming.org/registration/49492932?vendorKey=50i459494294842938nfudfh"
         }
       }
     }
