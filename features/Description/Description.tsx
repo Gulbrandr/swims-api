@@ -245,7 +245,20 @@ const Description: FC<DescriptionProps> = () => {
         need to be completed before a vendor is given production access.
         <ol>
           <li>Vendor Form: ( wip )</li>
-          <li>Vendors Using Events will need</li>
+          <li>Vendors</li>
+          <ul>
+            <li>
+              Swims will create a Certificate and Provide To Swims the
+              following. This will be sent with each event to ensure the
+              security of our event endpoint.
+            </li>
+            <ul>
+              <li>ClientCertificate.pfx</li>
+              <li>Client Certificate Password</li>
+              <li>Client Will then need to be installed on your server.</li>
+            </ul>
+          </ul>
+          <li>Vendors Using Events will also need to.</li>
           <ul>
             <li>URI where we send the EVENTS </li>
             <li>
