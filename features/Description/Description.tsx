@@ -84,7 +84,6 @@ const Description: FC<DescriptionProps> = () => {
         '\t"eventData": {',
         '\t\t"vendorId": "DB1884AADBC117"',
         '\t\t"eventDataContextName": "string"',
-        '\t\t"contextId": "["9589049054852", "9589049054853"]',
         '}',
       ],
     },
@@ -229,10 +228,10 @@ const Description: FC<DescriptionProps> = () => {
 
   return (
     <div className="flex flex-col justify-center pt-8">
-      <div className="py-10 px-32 flex flex-col gap-4 prose max-w-none swagger-ui ">
+      <div className="flex flex-col gap-4 px-32 py-10 prose max-w-none swagger-ui ">
         <div className="info">
           <hgroup className="main">
-            <h2 id="general-api" className=" title font-medium text-2xl">
+            <h2 id="general-api" className="text-2xl font-medium  title">
               General API
             </h2>
           </hgroup>
@@ -307,7 +306,7 @@ const Description: FC<DescriptionProps> = () => {
             <li>
               In Swims the Transfer is initiated from the Member Details Page by
               clicking the:{' '}
-              <span className="text-sky-500 underline cursor-pointer">
+              <span className="underline cursor-pointer text-sky-500">
                 initiate transfer
               </span>{' '}
               button link.
@@ -326,11 +325,11 @@ const Description: FC<DescriptionProps> = () => {
                   <strong>Member Transfer To Club Event</strong> Received by the
                   Club that the member is transferring into.
                 </li>
-                <span className="alert alert-warning shadow-lg md:w-3/4">
+                <span className="shadow-lg alert alert-warning md:w-3/4">
                   <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="stroke-current h-6 w-6"
+                      className="w-6 h-6 stroke-current"
                       fill="none"
                       viewBox="0 0 24 24"
                     >
