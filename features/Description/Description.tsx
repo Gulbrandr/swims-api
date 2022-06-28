@@ -111,7 +111,6 @@ const Description: FC<DescriptionProps> = () => {
         '\t"eventData": {',
         '\t\t"vendorId": "DB1884AADBC117"',
         '\t\t"eventDataContextName": "string"',
-        '\t\t"contextId": "["9589049054852", "9589049054853"]',
         '}',
       ],
     },
@@ -149,7 +148,6 @@ const Description: FC<DescriptionProps> = () => {
         '\t"eventData": {',
         '\t\t"vendorId": "DB1884AADBC117"',
         '\t\t"eventDataContextName": "string"',
-        '\t\t"contextId": "["9589049054852", "9589049054853"]',
 
         '}',
       ],
