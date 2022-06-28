@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "Third Party API",
     "version": "v1"
@@ -8,15 +8,33 @@
     "/swims/getVendorClubs/vendor": {
       "get": {
         "tags": ["SwimsThirdParty"],
-        "produces": ["text/plain", "application/json", "text/json"],
-        "description": "Get all the clubs that a vendor has access to.",
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SwimsThirdPartyVendorClubs"
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsThirdPartyVendorClubs"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsThirdPartyVendorClubs"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsThirdPartyVendorClubs"
+                  }
+                }
               }
             }
           }
@@ -26,34 +44,58 @@
     "/swims/getMemberDetails/club/{clubId}": {
       "get": {
         "tags": ["SwimsThirdParty"],
-        "produces": ["text/plain", "application/json", "text/json"],
-        "description": "Get the details of a member or a list of members for a club. \nIf the MemberId is not provided, the list of members for the club is returned, otherwise the details of the member are returned. \nThe Registration Array returns the most recent registration of a member [athlete, coach, official, misc]",
         "parameters": [
           {
-            "in": "path",
             "name": "clubId",
+            "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "in": "query",
             "name": "memberId",
-            "type": "string"
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "in": "query",
             "name": "lastModified",
-            "type": "string",
-            "format": "date-time"
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SwimsMemberDetail"
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsMemberDetail"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsMemberDetail"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsMemberDetail"
+                  }
+                }
               }
             }
           }
@@ -63,20 +105,35 @@
     "/swims/getRegistrationLink/club/{clubId}": {
       "get": {
         "tags": ["SwimsThirdParty"],
-        "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
-            "in": "path",
             "name": "clubId",
+            "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "string"
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -85,29 +142,59 @@
     "/swims/getAllEventsWithinDateTime/from/{fromDateTime}": {
       "get": {
         "tags": ["SwimsThirdParty"],
-        "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
-            "in": "path",
             "name": "fromDateTime",
+            "in": "path",
             "required": true,
-            "type": "string",
-            "format": "date-time"
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
-            "in": "query",
             "name": "toDateTime",
-            "type": "string",
-            "format": "date-time"
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "clubId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SwimsEvent"
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsEvent"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsEvent"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwimsEvent"
+                  }
+                }
               }
             }
           }
@@ -115,188 +202,209 @@
       }
     }
   },
-  "definitions": {
-    "SwimsEvent": {
-      "type": "object",
-      "properties": {
-        "eventSequence": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "eventTypeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "eventType": {
-          "type": "string"
-        },
-        "clubId": {
-          "type": "string"
-        },
-        "eventData": {
-          "type": "string"
-        },
-        "vendorUrl": {
-          "type": "string"
-        }
-      }
-    },
-    "SwimsMemberContactInformation": {
-      "type": "object",
-      "properties": {
-        "contactFirstName": {
-          "type": "string"
-        },
-        "contactLastName": {
-          "type": "string"
-        },
-        "contactEmail": {
-          "type": "string"
-        },
-        "contactPhone": {
-          "type": "string"
-        }
-      }
-    },
-    "SwimsMemberDetail": {
-      "type": "object",
-      "properties": {
-        "memberId": {
-          "type": "string"
-        },
-        "oldUsasId": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "preferredName": {
-          "type": "string"
-        },
-        "middleName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "birthDate": {
-          "type": "string"
-        },
-        "competitionCategory": {
-          "type": "string"
-        },
-        "contactInformation": {
-          "$ref": "#/definitions/SwimsMemberContactInformation"
-        },
-        "registrations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SwimsMemberRegistration"
+  "components": {
+    "schemas": {
+      "SwimsEvent": {
+        "type": "object",
+        "properties": {
+          "eventSequence": {
+            "type": "integer",
+            "format": "int32"
           },
-          "description": "List of most recent registrations of each type for a member",
-          "example": [
-            {
-              "registrationDate": "1652122270",
-              "expirationDate": "1715280670",
-              "registrationId": 49492932,
-              "registrationType": "coach",
-              "transactionType": "string",
-              "lscCode": "",
-              "clubCode": "string",
-              "usasFee": 400,
-              "lscFee": 200,
-              "isRenewal": true,
-              "isAttached": true,
-              "memberGoodStandingExpirationDate": "1715280670"
+          "eventTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubId": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedDatetime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eventData": {
+            "$ref": "#/components/schemas/SwimsEventData"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SwimsEventData": {
+        "type": "object",
+        "properties": {
+          "vendorRecordId": {
+            "type": "string",
+            "nullable": true
+          },
+          "memberIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
-            {
-              "registrationDate": "1652122270",
-              "expirationDate": "1715280670",
-              "registrationId": 49492932,
-              "registrationType": "official",
-              "transactionType": "string",
-              "lscCode": "",
-              "clubCode": "string",
-              "usasFee": 400,
-              "lscFee": 200,
-              "isRenewal": true,
-              "isAttached": true,
-              "memberGoodStandingExpirationDate": "1715280670"
+            "nullable": true
+          },
+          "clubIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
-            {
-              "registrationDate": "1652122270",
-              "expirationDate": "1715280670",
-              "registrationId": 49492932,
-              "registrationType": "athlete",
-              "transactionType": "string",
-              "lscCode": "",
-              "clubCode": "string",
-              "usasFee": 400,
-              "lscFee": 200,
-              "isRenewal": true,
-              "isAttached": true,
-              "memberGoodStandingExpirationDate": "1715280670"
-            }
-          ]
-        }
-      }
-    },
-    "SwimsMemberRegistration": {
-      "type": "object",
-      "properties": {
-        "registrationDate": {
-          "type": "string"
+            "nullable": true
+          }
         },
-        "expirationDate": {
-          "type": "string"
+        "additionalProperties": false
+      },
+      "SwimsMemberContactInformation": {
+        "type": "object",
+        "properties": {
+          "contactFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactPhone": {
+            "type": "string",
+            "nullable": true
+          }
         },
-        "registrationId": {
-          "format": "int32",
-          "type": "integer"
+        "additionalProperties": false
+      },
+      "SwimsMemberDetail": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "nullable": true
+          },
+          "oldUsasId": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "preferredName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "competitionCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedDatetime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contactInformation": {
+            "$ref": "#/components/schemas/SwimsMemberContactInformation"
+          },
+          "registrations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SwimsMemberRegistration"
+            },
+            "nullable": true
+          }
         },
-        "registrationType": {
-          "type": "string"
+        "additionalProperties": false
+      },
+      "SwimsMemberRegistration": {
+        "type": "object",
+        "properties": {
+          "registrationDate": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "expirationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "transactionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "lscCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "usasFee": {
+            "type": "number",
+            "format": "double"
+          },
+          "lscFee": {
+            "type": "number",
+            "format": "double"
+          },
+          "isRenewal": {
+            "type": "boolean"
+          },
+          "isAttached": {
+            "type": "boolean"
+          },
+          "attachedDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "memberGoodStandingExpirationDate": {
+            "type": "string",
+            "nullable": true
+          }
         },
-        "transactionType": {
-          "type": "string"
+        "additionalProperties": false
+      },
+      "SwimsThirdPartyVendorClubs": {
+        "type": "object",
+        "properties": {
+          "lscCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubId": {
+            "type": "string",
+            "nullable": true
+          }
         },
-        "lscCode": {
-          "type": "string"
-        },
-        "clubCode": {
-          "type": "string"
-        },
-        "usasFee": {
-          "format": "double",
-          "type": "number"
-        },
-        "lscFee": {
-          "format": "double",
-          "type": "number"
-        },
-        "isRenewal": {
-          "type": "boolean"
-        },
-        "isAttached": {
-          "type": "boolean"
-        },
-        "memberGoodStandingExpirationDate": {
-          "type": "string"
-        }
-      }
-    },
-    "SwimsThirdPartyVendorClubs": {
-      "type": "object",
-      "properties": {
-        "lscCode": {
-          "type": "string"
-        },
-        "clubCode": {
-          "type": "string"
-        },
-        "clubId": {
-          "type": "string"
-        }
+        "additionalProperties": false
       }
     }
   }
